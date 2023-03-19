@@ -2,7 +2,7 @@
 import TheHeader from "@/components/TheHeader.vue";
 import EntryEditor from "./components/EntryEditor.vue";
 import EntryCard from "@/components/EntryCard.vue";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import type { User } from "@/types/User";
 import type { Entry } from "./types/Entry";
 
@@ -12,8 +12,10 @@ const user: User = reactive({
   settings: [],
 });
 
+const entries = ref<Entry[]>([]);
+
 const handleCreateEntry = (entry: Entry) => {
-  console.log(entry);
+  entries.value.unshift(entry);
 };
 
 console.log(user);
@@ -24,8 +26,8 @@ console.log(user);
     <TheHeader />
     <EntryEditor @-create="handleCreateEntry" />
     <ul>
-      <li>
-        <EntryCard />
+      <li v-for="entry in entries" :key="entry.id">
+        <EntryCard :entry="entry" :user-name="user.username" />
       </li>
     </ul>
   </main>
