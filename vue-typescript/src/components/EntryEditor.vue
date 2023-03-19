@@ -24,7 +24,9 @@ export default {
 }
 <script>
 */
-defineEmits(["-create"]);
+defineEmits<{
+  (e: "-create", entry: { text: string; emoji: Emjoi | null }): void;
+}>();
 
 //#endregion
 
