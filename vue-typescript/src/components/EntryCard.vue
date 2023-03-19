@@ -4,10 +4,23 @@ import UseEmojis from "@/composables/UseEmojis";
 import type { Entry } from "@/types/Entry";
 import { computed } from "vue";
 import type Emoji from "@/types/Emjoi";
-const props = defineProps<{
+
+interface Props {
   entry: Entry;
   userName: string;
-}>();
+}
+
+const entryDefault: Entry = {
+  id: 1,
+  body: "",
+  emoji: null,
+  createdAt: new Date(),
+  userId: 1,
+};
+
+const props = withDefaults(defineProps<Props>(), {
+  userName: "Unknown",
+});
 
 const entryEmoji = computed<Emoji | string>(() => {
   return props.entry.emoji != null ? props.entry.emoji : "happy";
