@@ -6,14 +6,14 @@ import type Emjoi from "@/types/Emjoi";
 import type { Entry } from "@/types/Entry";
 
 //#region Variables
-const text = ref<string>("");
+const body = ref<string>("");
 const emoji = ref<Emjoi | null>(null);
 const maxCharacters = ref<number>(280);
 
 //#endregion
 
 //#region Computed
-const charCount = computed<number>(() => text.value.length);
+const charCount = computed<number>(() => body.value.length);
 //#endregion
 
 //#region Emits
@@ -25,7 +25,7 @@ export default {
 }
 <script>
 */
-defineEmits<{
+const $emit = defineEmits<{
   (e: "-create", entry: Entry): void;
 }>();
 
@@ -37,23 +37,24 @@ const handleTextInput = (e: Event) => {
   console.log(textArea.value);
 };
 
+function handleSubmit(): void {
+  $emit("-create", {
+    body: body.value,
+    emoji: emoji.value,
+    createdAt: new Date(),
+    userId: 1,
+    id: Math.random(),
+  });
+  body.value = "";
+  emoji.value = null;
+}
+
 //#endregion
 </script>
 <template>
-  <form
-    class="entry-form"
-    @submit.prevent="
-      $emit('-create', {
-        body: text,
-        emoji,
-        createdAt: new Date(),
-        userId: 1,
-        id: Math.random(),
-      })
-    "
-  >
+  <form class="entry-form" @submit.prevent="handleSubmit">
     <textarea
-      v-model="text"
+      v-model="body"
       :maxlength="maxCharacters"
       placeholder="New Journal Entry for danielkelly_io"
       @keyup="handleTextInput"
