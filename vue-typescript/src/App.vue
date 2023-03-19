@@ -17,7 +17,7 @@ console.log(user);
 <template>
   <main class="container m-auto p-10">
     <TheHeader />
-    <EntryEditor />
+    <EntryEditor @-create="" />
     <ul>
       <li>
         <EntryCard />

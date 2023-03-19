@@ -24,7 +24,7 @@ export default {
 }
 <script>
 */
-defineEmits(["create"]);
+defineEmits(["-create"]);
 
 //#endregion
 
@@ -37,7 +37,7 @@ const handleTextInput = (e: Event) => {
 //#endregion
 </script>
 <template>
-  <form class="entry-form" @submit.prevent="$emit('create', { text, emoji })">
+  <form class="entry-form" @submit.prevent="$emit('-create', { text, emoji })">
     <textarea
       v-model="text"
       :maxlength="maxCharacters"
