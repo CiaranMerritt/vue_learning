@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import EmojiField from "@/components/EmojiField.vue";
-import ArrowCircleRight from "@/assets/icons/arrow-circle-right.svg";
+import ArrowCircleRight from "@/assets/icons/arrow-circle-right.svg?component";
 import { computed, ref } from "vue";
 import type Emjoi from "@/types/Emjoi";
+import type { Entry } from "@/types/Entry";
 
 //#region Variables
 const text = ref<string>("");
@@ -25,7 +26,7 @@ export default {
 <script>
 */
 defineEmits<{
-  (e: "-create", entry: { text: string; emoji: Emjoi | null }): void;
+  (e: "-create", entry: Entry): void;
 }>();
 
 //#endregion
@@ -39,7 +40,18 @@ const handleTextInput = (e: Event) => {
 //#endregion
 </script>
 <template>
-  <form class="entry-form" @submit.prevent="$emit('-create', { text, emoji })">
+  <form
+    class="entry-form"
+    @submit.prevent="
+      $emit('-create', {
+        body: text,
+        emoji,
+        createdAt: new Date(),
+        userId: 1,
+        id: Math.random(),
+      })
+    "
+  >
     <textarea
       v-model="text"
       :maxlength="maxCharacters"
