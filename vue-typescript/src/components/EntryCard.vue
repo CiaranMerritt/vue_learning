@@ -19,6 +19,15 @@ const entryDefault: Entry = {
 };
 
 const props = withDefaults(defineProps<Props>(), {
+  entry: () => {
+    return {
+      id: 1,
+      body: "",
+      emoji: null,
+      createdAt: new Date(),
+      userId: 1,
+    };
+  },
   userName: "Unknown",
 });
 
